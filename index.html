@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Permohonan Tiket Pesawat</title>
+  <style>
+    * { box-sizing: border-box; font-family: sans-serif; }
+    body { background: #f0f4f8; margin: 0; padding: 20px; }
+    .container { max-width: 700px; margin: 0 auto; background: white; border-radius: 12px; padding: 30px; }
+    h1 { text-align: center; color: #1a73e8; }
+    .section { border: 1px solid #e0e0e0; border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+    .section h3 { margin-top: 0; color: #444; border-bottom: 2px solid #1a73e8; padding-bottom: 8px; }
+    .form-group { margin-bottom: 15px; }
+    label { display: block; font-weight: 600; margin-bottom: 5px; }
+    input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 15px; }
+    .required { color: red; }
+    button { width: 100%; background: #1a73e8; color: white; border: none; padding: 14px; font-size: 17px; font-weight: bold; border-radius: 8px; cursor: pointer; }
+    button:disabled { background: #ccc; }
+    .sembunyi { display: none; }
+    .berhasil { background: #e6f4ea; border: 1px solid #34a853; padding: 20px; border-radius: 8px; text-align: center; }
+    .error { background: #fce8e6; border: 1px solid #ea4335; padding: 15px; border-radius: 8px; margin-top: 15px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>✈️ Permohonan Tiket Pesawat</h1>
+
+    <form id="formPermohonan">
+      <div class="section">
+        <h3>📋 Data Pemohon</h3>
+        <div class="form-group">
+          <label>Email <span class="required">*</span></label>
+          <input type="email" name="Email" required>
+        </div>
+        <div class="form-group">
+          <label>Nama Lengkap <span class="required">*</span></label>
+          <input type="text" name="NamaLengkap" required>
+        </div>
+        <div class="form-group">
+          <label>NRP <span class="required">*</span></label>
+          <input type="text" name="NRP" required>
+        </div>
+        <div class="form-group">
+          <label>Department <span class="required">*</span></label>
+          <select name="Department" required>
+            <option value="">-- Pilih Departemen --</option>
+            <option>BRANCH MANAGER</option>
+            <option>SVC</option>
+            <option>PART</option>
+            <option>ADMINISTRATION</option>
+            <option>BUSINESS CONSULTANT</option>
+            <option>DEPARTMENT HEAD</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Jenis Reservasi Tiket <span class="required">*</span></label>
+          <input type="text" name="JenisReservasi" required>
+        </div>
+        <div class="form-group">
+          <label>Jabatan <span class="required">*</span></label>
+          <input type="text" name="Jabatan" required>
+        </div>
+        <div class="form-group">
+          <label>Golongan <span class="required">*</span></label>
+          <input type="text" name="Golongan" required>
+        </div>
+        <div class="form-group">
+          <label>Keperluan Pemesanan Tiket</label>
+          <textarea name="Keperluan" rows="2"></textarea>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3>✈️ Keberangkatan</h3>
+        <div class="form-group">
+          <label>Tanggal Berangkat <span class="required">*</span></label>
+          <input type="date" name="TanggalBerangkat" required>
+        </div>
+        <div class="form-group">
+          <label>Rute Penerbangan Keberangkatan <span class="required">*</span></label>
+          <input type="text" name="RuteBerangkat" placeholder="Contoh: Sampit (SMQ) - Jakarta (CGK)" required>
+        </div>
+        <div class="form-group">
+          <label>Maskapai Keberangkatan <span class="required">*</span></label>
+          <input type="text" name="MaskapaiBerangkat" placeholder="Contoh: Super Air Jet (IU-351)" required>
+        </div>
+        <div class="form-group">
+          <label>Jam Keberangkatan <span class="required">*</span></label>
+          <input type="time" name="JamBerangkat" required>
+        </div>
+        <div class="form-group">
+          <label>Keterangan</label>
+          <textarea name="KeteranganBerangkat" rows="2"></textarea>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3>🔄 Tiket Kembali</h3>
+        <div class="form-group">
+          <label>Apakah membutuhkan tiket kembali? <span class="required">*</span></label>
+          <select name="ButuhKembali" id="butuhKembali" required>
+            <option value="">-- Pilih --</option>
+            <option>Ya</option>
+            <option>Tidak</option>
+          </select>
+        </div>
+        <div id="bagianKembali" class="sembunyi">
+          <div class="form-group">
+            <label>Deskripsi (opsional)</label>
+            <input type="text" name="DeskripsiOpsional">
+          </div>
+          <div class="form-group">
+            <label>Tanggal Kembali <span class="required">*</span></label>
+            <input type="date" name="TanggalKembali" id="tglKembali">
+          </div>
+          <div class="form-group">
+            <label>Rute Penerbangan Kembali <span class="required">*</span></label>
+            <input type="text" name="RuteKembali" id="ruteKembali" placeholder="Contoh: Jakarta (CGK) - Sampit (SMQ)">
+          </div>
+          <div class="form-group">
+            <label>Maskapai Kembali <span class="required">*</span></label>
+            <input type="text" name="MaskapaiKembali" id="maskapaiKembali">
+          </div>
+          <div class="form-group">
+            <label>Jam Keberangkatan Kembali <span class="required">*</span></label>
+            <input type="time" name="JamKembali" id="jamKembali">
+          </div>
+          <div class="form-group">
+            <label>Keterangan</label>
+            <textarea name="KeteranganKembali" rows="2"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" id="btnKirim">📤 Kirim Permohonan</button>
+      <div id="pesanError" class="error sembunyi"></div>
+    </form>
+
+    <div id="halamanBerhasil" class="sembunyi">
+      <div class="berhasil">
+        <h2>✅ Permohonan Berhasil Dikirim!</h2>
+        <p>Nomor Tiket Anda:</p>
+        <h3 id="nomorTiket" style="color: #1a73e8; font-size: 24px;"></h3>
+        <p>Silakan cek email untuk konfirmasi.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ========== GANTI LINK INI DENGAN LINK APPS SCRIPT KAMU ==========
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbza_I6IxIAIc164lhk8__IkyvMCWA6iGKZJn4vNHUbRHUPEtjNEoocy_687ImQescKB/exec";
+    // ===============================================================
+
+    const pilih = document.getElementById('butuhKembali');
+    const bagianKembali = document.getElementById('bagianKembali');
+    
+    pilih.addEventListener('change', function() {
+      if (this.value === 'Ya') {
+        bagianKembali.classList.remove('sembunyi');
+        document.getElementById('tglKembali').required = true;
+        document.getElementById('ruteKembali').required = true;
+        document.getElementById('maskapaiKembali').required = true;
+        document.getElementById('jamKembali').required = true;
+      } else {
+        bagianKembali.classList.add('sembunyi');
+        document.getElementById('tglKembali').required = false;
+        document.getElementById('ruteKembali').required = false;
+        document.getElementById('maskapaiKembali').required = false;
+        document.getElementById('jamKembali').required = false;
+      }
+    });
+
+    const form = document.getElementById('formPermohonan');
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const btn = document.getElementById('btnKirim');
+      const pesanError = document.getElementById('pesanError');
+      
+      btn.disabled = true;
+      btn.textContent = "Mengirim...";
+      pesanError.classList.add('sembunyi');
+      
+      const data = Object.fromEntries(new FormData(form).entries());
+      
+      try {
+        const res = await fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        
+        const hasil = await res.json();
+        
+        if (hasil.sukses) {
+          document.getElementById('nomorTiket').textContent = hasil.nomorTiket;
+          form.classList.add('sembunyi');
+          document.getElementById('halamanBerhasil').classList.remove('sembunyi');
+        } else {
+          pesanError.textContent = "Error: " + hasil.pesan;
+          pesanError.classList.remove('sembunyi');
+          btn.disabled = false;
+          btn.textContent = "📤 Kirim Permohonan";
+        }
+      } catch (err) {
+        pesanError.textContent = "Terjadi kesalahan: " + err.message;
+        pesanError.classList.remove('sembunyi');
+        btn.disabled = false;
+        btn.textContent = "📤 Kirim Permohonan";
+      }
+    });
+  </script>
+</body>
+</html>
