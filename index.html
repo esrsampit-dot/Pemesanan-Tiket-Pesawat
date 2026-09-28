@@ -147,7 +147,7 @@
     </div>
   </div>
 
-  <script>
+    <script>
     // ========== GANTI LINK INI DENGAN LINK APPS SCRIPT KAMU ==========
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbza_I6IxIAIc164lhk8__IkyvMCWA6iGKZJn4vNHUbRHUPEtjNEoocy_687ImQescKB/exec";
     // ===============================================================
@@ -187,11 +187,14 @@
       try {
         const res = await fetch(APPS_SCRIPT_URL, {
           method: 'POST',
+          mode: 'no-cors',  // ✅ WAJIB ada ini!
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data)
         });
         
-        const hasil = await res.json();
+        // Karena pakai no-cors, baca respons lewat text dulu
+        const teks = await res.text();
+        const hasil = JSON.parse(teks);
         
         if (hasil.sukses) {
           document.getElementById('nomorTiket').textContent = hasil.nomorTiket;
@@ -211,5 +214,3 @@
       }
     });
   </script>
-</body>
-</html>
